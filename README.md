@@ -10,7 +10,7 @@
 
 ## загрузка файла 
 
-(http://localhost:3001/upload "url адрес для загрузки файла")
+`http://localhost:3001/upload` url адрес для загрузки файла
 
 метод **post**\
 заголовок **multipart/form-data**\
