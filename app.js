@@ -66,7 +66,7 @@ app.post('/upload', async (request, response)=>{
                     }
                     //расширение не .mov
                     const extension = request.files.video[0].originalname.split('.')                   
-                    if(extension[1] !== 'mov'){
+                    if(extension[extension.length-1] !== 'mov'){
                         console.log('the file has an incorrect extension');
                         throw new Error('The file has an incorrect extension') 
                     }
