@@ -2,9 +2,10 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import multer from 'multer'
-
-import ffmpegPath from '@ffmpeg-installer/ffmpeg'
 import ffmpeg from 'fluent-ffmpeg'
+
+//устанавливаем пакет для корректной работы путей в fluent-ffmpeg
+import ffmpegPath from '@ffmpeg-installer/ffmpeg'
 ffmpeg.setFfmpegPath(ffmpegPath.path)
 
 import { fileURLToPath } from 'url';
