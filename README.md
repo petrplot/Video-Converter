@@ -10,7 +10,7 @@
 
 ## Загрузка файла 
 
-`http://localhost:3001/upload` url адрес для загрузки файла
+`http://localhost:3001/files/upload` url адрес для загрузки файла
 
 метод **post**\
 заголовок **multipart/form-data**\
@@ -18,4 +18,4 @@
 у файла должен быть `mimetype:"video/*"` расширение `.mov`
 
 возвращает ссылку на переформатированный файл \
-например `http://localhost:3001/download/12334456869.mp4`
+например `http://localhost:3001/files/download/12334456869.mp4`
