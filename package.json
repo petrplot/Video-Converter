@@ -2,8 +2,9 @@
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon src/app.js"
   },
   "author": "@petr_plot",
   "license": "ISC",
