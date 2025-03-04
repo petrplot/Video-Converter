@@ -3,35 +3,32 @@ import {fileUploadService} from '../services/fileService.js'
 import {fileDownloadService} from '../services/fileService.js'
 import upload from '../middleware/multerUpload.js'
 
-async function uploadFile(request,response) {
+import util from 'util';
+const uploadMiddleware = util.promisify(upload); // Делаем `upload` поддерживающим `await`
+
+async function uploadFile(request, response) {
     try {
-        //middleware multerUpload
-        await upload(request, response, async (err)=>{
-            try {
-                //непредвиденная ошибка  
-                if(err){
-                    console.log('err:',err.message);
-                    throw err
-                }
-                //получаем массив файлов из ответа с клиента
-                const arrayFiles = request.files.video
-                // используем сервис для обработки файла
-                const mp4FileName = await fileUploadService(arrayFiles)
-                // возвращаем ссылку
-                response.status(200).json({
-                    link:`http://localhost:3001/files/download/${mp4FileName}`
-                })
-    
-            } catch (error) {
-                console.log('bad request 1',error);
-                response.status(400).json(error.message) 
-            }              
-        })   
-    } catch (error) {
-        //общая ошибка от сервера
-        console.log('bad request 2',error);
-        response.status(400).json(error.message) 
+        // Ожидаем загрузку файлов
+        await uploadMiddleware(request, response);
+
+        if (!request.files || !request.files.video) {
+            throw new Error('Файлы не загружены');
+        }
+
+        // Получаем массив файлов
+        const arrayFiles = request.files.video;
         
+        // Обрабатываем файлы через сервис
+        const mp4FileName = await fileUploadService(arrayFiles);
+
+        // Возвращаем ссылку
+        response.status(200).json({
+            link: `http://localhost:3001/files/download/${mp4FileName}`
+        });
+        
+    } catch (error) {
+        console.error('Ошибка загрузки файла:', error);
+        response.status(400).json({ error: error.message });
     }
 }
 
